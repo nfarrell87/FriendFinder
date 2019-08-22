@@ -1,14 +1,15 @@
-app.get("/api/friends", function (req, res) {
-    res.json({
-        message: "Hello World!"
-    })
-});
+var friends = require("../data/friends.js");
 
-app.post("/api/friends", function(req, res) {
-    // req.body hosts is equal to the JSON post sent from the user
-    // This works because of our body parsing middleware
-    var newFriend = req.body;
-    console.log(newFriend);
-    friends.push(newFriend);
-    res.json(newFriend);
-  });
+module.exports = function (app) {
+
+    app.get("/api/friends", function(req, res) {
+        res.json(friends);
+      });
+    app.post("/api/friends", function (req, res) {
+        // req.body hosts is equal to the JSON post sent from the user
+        // This works because of our body parsing middleware
+        friends.push(req.body);
+        res.json(friends);
+        console.log(friends);
+    });
+}

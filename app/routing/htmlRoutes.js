@@ -1,10 +1,16 @@
-app.get("/", function (req, res) {
-    res.sendFile(path.join(__dirname, "home.html"));
-});
+var path = require("path");
 
-app.get("/survey", function (req, res) {
-    res.sendFile(path.join(__dirname, "survey.html"));
-});
-app.get("*", function (req, res) {
-    res.redirect("/");
-})
+module.exports = function(app) {
+    
+    // if user enters survey in URL or presses survey button, serves the survey HTML file
+	app.get("/survey", function(req, res) {
+		res.sendFile(path.join(__dirname, "../public/survey.html"));
+	});
+    app.get("/", function(req, res) {
+		res.sendFile(path.join(__dirname, "/../public/home.html"));
+	});
+	// fallback use route for homepage
+	app.use(function(req, res) {
+		res.sendFile(path.join(__dirname, "/../public/home.html"));
+	});
+};
